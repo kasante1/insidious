@@ -1,8 +1,10 @@
 # Isidious - routes confilicts can really mess your day.
 
+This is a work in progress.
+
 This is a command-line tool written in Rust.
 It analyzes Express.js projects for route conflicts and generates similarity reports.
-This tool helps developers identify potential routing issues and precedence issues.
+This tool helps developers identify potential routing and precedence issues.
 
 ## Features
 
