@@ -1,4 +1,4 @@
-# Isidious - routes confilicts can really mess your day.
+# Insidious - routes conflicts and precedent issues can really mess your day up in the most subtle way.
 
 This is a work in progress.
 
