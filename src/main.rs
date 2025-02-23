@@ -34,9 +34,8 @@ fn extract_routes(file_path: &str) -> Vec<Route> {
     let content = fs::read_to_string(file_path).unwrap_or_default();
     let mut routes = Vec::new();
     
-    let app_route_regex = Regex::new(r"app\.(get|post|put|delete|patch)\(['\](.*?)['\]\s*,").unwrap();
-    let router_route_regex = Regex::new(r"router\.(get|post|put|delete|patch)\(['\](.*?)['\]\s*,").unwrap();
-    
+    let app_route_regex = Regex::new(r#"app\.(get|post|put|delete|patch)\(['"](.+?)['"],?"#).unwrap();
+    let router_route_regex = Regex::new(r#"router\.(get|post|put|delete|patch)\(['"](.+?)['"],?"#).unwrap();
     for (line_number, line) in content.lines().enumerate() {
         for cap in app_route_regex.captures_iter(line) {
             routes.push(Route {
