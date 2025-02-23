@@ -1,12 +1,12 @@
 use std::fs;
 use std::path::Path;
 use regex::Regex;
-use serde::{Deserialize, Serialize};
+use serde::{Serialize};
 use walkdir::WalkDir;
 use similar::{ChangeTag, TextDiff};
 use std::collections::HashMap;
 
-#[derive(Debug, Serialize)]
+#[derive(Debug, Serialize, Clone)] 
 struct Route {
     path: String,
     method: String,
@@ -14,7 +14,7 @@ struct Route {
     line_number: usize,
 }
 
-#[derive(Debug, Serialize)]
+#[derive(Debug, Serialize, Clone)]
 struct RouteConflict {
     route1: Route,
     route2: Route,
