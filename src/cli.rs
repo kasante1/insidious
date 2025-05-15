@@ -11,11 +11,20 @@ pub struct AnalysisConfig {
 
 #[derive(Parser)]
 #[command(
-    name = "express-route-analyzer",
-    author = "verbsgh@gmail.com",
+    name = "insidiuos",
+    author = "Your Name",
     version,
-    about = "Analyzes Express.js routes in Express.js projects to detect routes conflicts",
-    long_about = None
+    about = "Analyzes Express.js routes in Express.js projects to detect conflicts and potential issues",
+    long_about = "A tool for Express.js developers to detect route conflicts, similar routes, and potential issues in Express js applications.",
+    after_help = "EXAMPLES:
+  # Analyze a project
+  insidiuos analyze path/to/project --exclude node_modules,dist --extensions js,ts
+
+  # Generate a report
+  insidiuos report path/to/project --format html --output report.html
+
+  # Initialize a config file
+  insidiuos init"
 )]
 pub struct CliArgs {
     #[command(subcommand)]
@@ -25,6 +34,14 @@ pub struct CliArgs {
 #[derive(Subcommand)]
 pub enum Commands {
     /// Analyze Express.js routes in a project
+    #[command(
+        after_help = "EXAMPLE:
+  insidiuos analyze ./my-express-app --exclude node_modules,dist,build --extensions js,ts,jsx
+
+This will analyze all routes in the specified project directory, excluding the directories mentioned,
+and will look for files with the specified extensions. The analysis will identify route conflicts
+and routes with similarity above the specified threshold."
+    )]
     Analyze {
         /// Path to the Express.js project directory
         project_directory: String,
@@ -43,9 +60,33 @@ pub enum Commands {
     },
     
     /// Initialize a configuration file
+    #[command(
+        after_help = "EXAMPLE:
+  insidiuos init
+  
+This will create a .express-analyzer.json configuration file in the current directory
+with default settings for excluded directories, file extensions, and similarity threshold."
+    )]
     Init,
     
     /// Generate a report in a specific format
+    #[command(
+        after_help = "EXAMPLES:
+  # Generate a JSON report
+  insidiuos report ./my-express-app --format json --output routes.json
+  
+  # Generate an HTML report
+  insidiuos report ./my-express-app --format html --output routes.html
+  
+  # Generate a Markdown report
+  insidiuos report ./my-express-app --format markdown --output routes.md
+  
+The tool will analyze the project and generate a report in the specified format.
+If no output path is provided, the report will be saved to:
+  - route_analysis_report.json (for JSON format)
+  - route_analysis_report.html (for HTML format)
+  - route_analysis_report.md (for Markdown format)"
+    )]
     Report {
         /// Path to the Express.js project directory
         project_directory: String,
@@ -68,6 +109,7 @@ pub enum Commands {
     },
 }
 
+/// Parse command line arguments
 pub fn get_args() -> CliArgs {
     CliArgs::parse()
 }
