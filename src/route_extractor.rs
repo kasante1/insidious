@@ -42,7 +42,6 @@ pub fn extract_all_routes(config: &AnalysisConfig) -> Vec<Route> {
 }
 
 fn extract_routes_from_file(file_path: &str) -> Vec<Route> {
-    // Same as before
     let content = fs::read_to_string(file_path).unwrap_or_default();
     let mut routes = Vec::new();
     
