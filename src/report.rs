@@ -1,11 +1,10 @@
 use std::collections::HashMap;
 use std::fs;
-use std::path::{Path, PathBuf};
+use std::path::Path;
 use crate::models::{Route, RouteConflict, AnalysisReport};
 use crate::utils::calculate_path_similarity;
 
 pub fn create_analysis_report(routes: Vec<Route>, conflicts: Vec<RouteConflict>) -> AnalysisReport {
-
     let mut similarity_matrix = HashMap::new();
     
     for route1 in routes.iter() {
@@ -27,7 +26,6 @@ pub fn create_analysis_report(routes: Vec<Route>, conflicts: Vec<RouteConflict>)
 }
 
 pub fn print_report_summary(report: &AnalysisReport) {
-
     println!("\nRoute Analysis Report");
     println!("====================");
     println!("Total Routes: {}", report.total_routes);
@@ -54,16 +52,23 @@ pub fn print_report_summary(report: &AnalysisReport) {
     }
 }
 
-pub fn save_json_report(report: &AnalysisReport, output_path: Option<&Path>) {
+pub fn save_json_report(report: &AnalysisReport, output_path: Option<&str>) {
+    let path = match output_path {
+        Some(path_str) => Path::new(path_str),
+        None => Path::new("route_analysis_report.json"),
+    };
+    
     let json = serde_json::to_string_pretty(report).unwrap();
-    let path = output_path.unwrap_or_else(|| Path::new("route_analysis_report.json"));
     
     fs::write(path, json).unwrap();
     println!("\nDetailed JSON report saved to {}", path.display());
 }
 
-pub fn save_html_report(report: &AnalysisReport, output_path: Option<&Path>) {
-    let path = output_path.unwrap_or_else(|| Path::new("route_analysis_report.html"));
+pub fn save_html_report(report: &AnalysisReport, output_path: Option<&str>) {
+    let path = match output_path {
+        Some(path_str) => Path::new(path_str),
+        None => Path::new("route_analysis_report.html"),
+    };
     
     // HTML report template
     let mut html = String::from(r#"<!DOCTYPE html>
@@ -121,8 +126,11 @@ pub fn save_html_report(report: &AnalysisReport, output_path: Option<&Path>) {
     println!("\nDetailed HTML report saved to {}", path.display());
 }
 
-pub fn save_markdown_report(report: &AnalysisReport, output_path: Option<&Path>) {
-    let path = output_path.unwrap_or_else(|| Path::new("route_analysis_report.md"));
+pub fn save_markdown_report(report: &AnalysisReport, output_path: Option<&str>) {
+    let path = match output_path {
+        Some(path_str) => Path::new(path_str),
+        None => Path::new("route_analysis_report.md"),
+    };
     
     let mut markdown = String::from("# Express.js Route Analysis Report\n\n");
     markdown.push_str(&format!("- **Total Routes:** {}\n", report.total_routes));
