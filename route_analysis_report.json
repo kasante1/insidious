@@ -1,0 +1,13 @@
+{
+  "conflicts": [],
+  "total_routes": 3,
+  "conflict_count": 0,
+  "similarity_matrix": {
+    "/stripe-webhook <-> /hubtel-webhook": 146.66666666666666,
+    "/stripe-webhook <-> /messages": 40.0,
+    "/hubtel-webhook <-> /stripe-webhook": 146.66666666666666,
+    "/hubtel-webhook <-> /messages": 40.0,
+    "/messages <-> /hubtel-webhook": 40.0,
+    "/messages <-> /stripe-webhook": 40.0
+  }
+}

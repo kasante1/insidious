@@ -5,6 +5,20 @@ use serde::{Serialize};
 use walkdir::WalkDir;
 use similar::{ChangeTag, TextDiff};
 use std::collections::HashMap;
+use clap::{Parser, Subcommand};
+
+#[derive(Parser)]
+#[command(
+    name = "express-route-analyzer",
+    author = "verbsgh <verbsgh@gmail.com>",
+    version = "1.0.0",
+    about = "Analyzes Express.js routes to detect conflicts and potential issues",
+    long_about = None
+)]
+struct Args {
+    #[arg(help = "The root directory of your Express.js project to analyze")]
+    project_directory: String
+}
 
 #[derive(Debug, Serialize, Clone)] 
 struct Route {
@@ -183,14 +197,12 @@ fn generate_report(project_path: &str) -> AnalysisReport {
     }
 }
 
+
+
 fn main() {
-    let args: Vec<String> = std::env::args().collect();
-    if args.len() != 2 {
-        println!("Usage: {} <express-project-path>", args[0]);
-        return;
-    }
-    
-    let project_path = &args[1];
+    let args = Args::parse();
+
+    let project_path = &args.project_directory;
     if !Path::new(project_path).exists() {
         println!("Error: Project path does not exist");
         return;
