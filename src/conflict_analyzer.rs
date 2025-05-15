@@ -1,7 +1,8 @@
 use crate::models::{Route, RouteConflict};
 use crate::utils::calculate_path_similarity;
+use crate::cli::AnalysisConfig;
 
-pub fn check_route_conflicts(routes: &[Route]) -> Vec<RouteConflict> {
+pub fn check_route_conflicts(routes: &[Route], config: &AnalysisConfig) -> Vec<RouteConflict> {
     let mut conflicts = Vec::new();
     
     for (i, route1) in routes.iter().enumerate() {
@@ -34,7 +35,7 @@ pub fn check_route_conflicts(routes: &[Route]) -> Vec<RouteConflict> {
                     }
                 }
                 
-                if potential_conflict && similarity > 70.0 {
+                if potential_conflict && similarity > config.similarity_threshold {
                     conflicts.push(create_conflict(
                         route1.clone(), 
                         route2.clone(), 
