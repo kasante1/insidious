@@ -11,20 +11,20 @@ pub struct AnalysisConfig {
 
 #[derive(Parser)]
 #[command(
-    name = "express-route-analyzer",
+    name = "insidiuos",
     author = "Your Name",
     version,
     about = "Analyzes Express.js routes in Express.js projects to detect conflicts and potential issues",
     long_about = "A tool for Express.js developers to detect route conflicts, similar routes, and potential issues in their Express applications.",
     after_help = "EXAMPLES:
   # Analyze a project
-  express-route-analyzer analyze path/to/project --exclude node_modules,dist --ext js,ts
+  insidiuos analyze path/to/project --exclude node_modules,dist --ext js,ts
 
   # Generate a report
-  express-route-analyzer report path/to/project --format html --output report.html
+  insidiuos report path/to/project --format html --output report.html
 
   # Initialize a config file
-  express-route-analyzer init"
+  insidiuos init"
 )]
 pub struct CliArgs {
     #[command(subcommand)]
@@ -36,7 +36,7 @@ pub enum Commands {
     /// Analyze Express.js routes in a project
     #[command(
         after_help = "EXAMPLE:
-  express-route-analyzer analyze ./my-express-app --exclude node_modules,dist,build --ext js,ts,jsx
+  insidiuos analyze ./my-express-app --exclude node_modules,dist,build --ext js,ts,jsx
 
 This will analyze all routes in the specified project directory, excluding the directories mentioned,
 and will look for files with the specified extensions. The analysis will identify route conflicts
@@ -62,7 +62,7 @@ and routes with similarity above the specified threshold."
     /// Initialize a configuration file
     #[command(
         after_help = "EXAMPLE:
-  express-route-analyzer init
+  insidiuos init
   
 This will create a .express-analyzer.json configuration file in the current directory
 with default settings for excluded directories, file extensions, and similarity threshold."
@@ -73,13 +73,13 @@ with default settings for excluded directories, file extensions, and similarity 
     #[command(
         after_help = "EXAMPLES:
   # Generate a JSON report
-  express-route-analyzer report ./my-express-app --format json --output routes.json
+  insidiuos report ./my-express-app --format json --output routes.json
   
   # Generate an HTML report
-  express-route-analyzer report ./my-express-app --format html --output routes.html
+  insidiuos report ./my-express-app --format html --output routes.html
   
   # Generate a Markdown report
-  express-route-analyzer report ./my-express-app --format markdown --output routes.md
+  insidiuos report ./my-express-app --format markdown --output routes.md
   
 The tool will analyze the project and generate a report in the specified format.
 If no output path is provided, the report will be saved to:
