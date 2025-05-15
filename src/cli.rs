@@ -11,20 +11,20 @@ pub struct AnalysisConfig {
 
 #[derive(Parser)]
 #[command(
-    name = "insidiuos",
+    name = "express-route-analyzer",
     author = "Your Name",
     version,
     about = "Analyzes Express.js routes in Express.js projects to detect conflicts and potential issues",
-    long_about = "A tool for Express.js developers to detect route conflicts, similar routes, and potential issues in Express js applications.",
+    long_about = "A tool for Express.js developers to detect route conflicts, similar routes, and potential issues in their Express applications.",
     after_help = "EXAMPLES:
   # Analyze a project
-  insidiuos analyze path/to/project --exclude node_modules,dist --extensions js,ts
+  express-route-analyzer analyze path/to/project --exclude node_modules,dist --ext js,ts
 
   # Generate a report
-  insidiuos report path/to/project --format html --output report.html
+  express-route-analyzer report path/to/project --format html --output report.html
 
   # Initialize a config file
-  insidiuos init"
+  express-route-analyzer init"
 )]
 pub struct CliArgs {
     #[command(subcommand)]
@@ -36,7 +36,7 @@ pub enum Commands {
     /// Analyze Express.js routes in a project
     #[command(
         after_help = "EXAMPLE:
-  insidiuos analyze ./my-express-app --exclude node_modules,dist,build --extensions js,ts,jsx
+  express-route-analyzer analyze ./my-express-app --exclude node_modules,dist,build --ext js,ts,jsx
 
 This will analyze all routes in the specified project directory, excluding the directories mentioned,
 and will look for files with the specified extensions. The analysis will identify route conflicts
@@ -51,7 +51,7 @@ and routes with similarity above the specified threshold."
         exclude: Vec<String>,
         
         /// File extensions to analyze (comma-separated)
-        #[arg(short, long, value_delimiter = ',', default_value = "js")]
+        #[arg(short = 'x', long = "ext", value_delimiter = ',', default_value = "js")]
         extensions: Vec<String>,
         
         /// Minimum similarity percentage to flag as a conflict
@@ -62,7 +62,7 @@ and routes with similarity above the specified threshold."
     /// Initialize a configuration file
     #[command(
         after_help = "EXAMPLE:
-  insidiuos init
+  express-route-analyzer init
   
 This will create a .express-analyzer.json configuration file in the current directory
 with default settings for excluded directories, file extensions, and similarity threshold."
@@ -73,13 +73,13 @@ with default settings for excluded directories, file extensions, and similarity 
     #[command(
         after_help = "EXAMPLES:
   # Generate a JSON report
-  insidiuos report ./my-express-app --format json --output routes.json
+  express-route-analyzer report ./my-express-app --format json --output routes.json
   
   # Generate an HTML report
-  insidiuos report ./my-express-app --format html --output routes.html
+  express-route-analyzer report ./my-express-app --format html --output routes.html
   
   # Generate a Markdown report
-  insidiuos report ./my-express-app --format markdown --output routes.md
+  express-route-analyzer report ./my-express-app --format markdown --output routes.md
   
 The tool will analyze the project and generate a report in the specified format.
 If no output path is provided, the report will be saved to:
@@ -104,7 +104,7 @@ If no output path is provided, the report will be saved to:
         exclude: Vec<String>,
         
         /// File extensions to analyze (comma-separated)
-        #[arg(short, long, value_delimiter = ',', default_value = "js")]
+        #[arg(short = 'x', long = "ext", value_delimiter = ',', default_value = "js")]
         extensions: Vec<String>,
     },
 }
