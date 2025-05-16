@@ -12,7 +12,7 @@ pub struct AnalysisConfig {
 #[derive(Parser)]
 #[command(
     name = "insidious",
-    author = "Your Name",
+    author = "dsasante1@gmail.com",
     version,
     about = "Analyzes Express.js routes in Express.js projects to detect conflicts and potential issues",
     long_about = "A tool for Express.js developers to detect route conflicts, similar routes, and potential issues in their Express applications.",
